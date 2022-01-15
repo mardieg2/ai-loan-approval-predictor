@@ -1,3 +1,5 @@
+# STEP 1
+
 import os
 import sagemaker
 from sagemaker import get_execution_role
@@ -33,7 +35,7 @@ bucket = 'YOUR_BUCKET_NAME' # example -> 's3://sagemaker-leader-ml'
 
 
 # set an output path where the trained model will be saved
-output_path = '{}/output'.format(bucket)
+output_path = '{}/output'.format(bucket) # REMINDER: CREATE A FOLDER WITH NAME OUTPUT IN THE S3 REPO
 
 # this line automatically looks for the XGBoost image URI and builds an XGBoost container.
 # specify the repo_version depending on your preference.
@@ -53,11 +55,11 @@ content_type = "text/csv"
 
 #train_data_url = 'sagemaker-leader-ml/ml-data-train.csv' # s3://sagemaker-leader-ml/ml-data-train.csv
 #train_input = TrainingInput("s3://{}".format(train_data_url), content_type=content_type)
-train = sagemaker.inputs.TrainingInput(s3_data='s3://sagemaker-leader-ml/train_v1.csv', content_type=content_type)
+train = sagemaker.inputs.TrainingInput(s3_data='s3://YOUR-BUCKET/YOUR-FILE.csv', content_type=content_type) # EXAMPLE: 's3://sagemaker-leader-ml/train_v1.csv'
 
 #test_data_url = 'sagemaker-leader-ml/ml-data-test.csv' # s3://sagemaker-leader-ml
 #validation_input = TrainingInput("s3://{}".format(test_data_url), content_type=content_type)
-val = sagemaker.inputs.TrainingInput(s3_data='s3://sagemaker-leader-ml/val_v1.csv', content_type=content_type)                  
+val = sagemaker.inputs.TrainingInput(s3_data='s3://YOUR-BUCKET/YOUR-FILE.csv', content_type=content_type) # EXAMPLE: 's3://sagemaker-leader-ml/val_v1.csv'              
 
 
 # execute the XGBoost training job
@@ -65,13 +67,20 @@ estimator.fit({'train': train, 'validation': val}) # {'train': train_input, 'val
 #estimator.fit(train,val)
 
 
-predictor = estimator.deploy(instance_type='ml.t2.medium', initial_instance_count=1, endpoint_name="test-endpoint1")
+# STEP 2
+
+
+predictor = estimator.deploy(instance_type='ml.t2.medium', initial_instance_count=1, endpoint_name="ANY-NAME") # EXAMPLE: test-endpoint1
 
  
-endpoint = 'test-endpoint1'
+endpoint = 'ANY-NAME' # MUST BE THE SAME NAME AS IN THE PREVIOUS LINE
  
 runtime = boto3.Session().client('sagemaker-runtime')
  
+
+# STEP 3
+
+# A new customer pop-in with the following information: monthly income, expenses ,employed time, requested amount. It must be fed into the model that order
 csv_text = '16500,6500,66,270000'
 # Send CSV text via InvokeEndpoint API
 response = runtime.invoke_endpoint(EndpointName=endpoint, ContentType='text/csv', Body=csv_text)
