@@ -16,6 +16,6 @@ copy paste the code under STEP 2, is actually just one line of code to deploy th
 
 
 3. Run predictions - 
-copy paste the code under STEP 3. The model is now deployed and ready to make predictions. The model will return the probability in this case a 99% that the loan should be approved:
+copy paste the code under STEP 3. The model is now deployed and ready to make predictions. The model will return the probability, in this case a 99% that the loan should be approved:
 
 ![image](https://user-images.githubusercontent.com/93351988/149624588-54be4099-7a82-4cdb-af90-6918da2c3cbc.png)
