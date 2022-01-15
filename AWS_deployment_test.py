@@ -66,19 +66,19 @@ val = sagemaker.inputs.TrainingInput(s3_data='s3://YOUR-BUCKET/YOUR-FILE.csv', c
 estimator.fit({'train': train, 'validation': val}) # {'train': train_input, 'validation': validation_input}
 #estimator.fit(train,val)
 
-
 # STEP 2
+
 
 
 predictor = estimator.deploy(instance_type='ml.t2.medium', initial_instance_count=1, endpoint_name="ANY-NAME") # EXAMPLE: test-endpoint1
 
  
+
+# STEP 3
+
 endpoint = 'ANY-NAME' # MUST BE THE SAME NAME AS IN THE PREVIOUS LINE
  
 runtime = boto3.Session().client('sagemaker-runtime')
- 
-
-# STEP 3
 
 # A new customer pop-in with the following information: monthly income, expenses ,employed time, requested amount. It must be fed into the model that order
 csv_text = '16500,6500,66,270000'
