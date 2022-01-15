@@ -53,12 +53,10 @@ estimator = sagemaker.estimator.Estimator(image_uri=xgboost_container,
 # define the data type and paths to the training and validation datasets
 content_type = "text/csv"
 
-#train_data_url = 'sagemaker-leader-ml/ml-data-train.csv' # s3://sagemaker-leader-ml/ml-data-train.csv
-#train_input = TrainingInput("s3://{}".format(train_data_url), content_type=content_type)
+# REMINDER: the train and validation data should be fed in very specific format: target column should be the first column in a [0,1] style, no headers, only integers (!). 
 train = sagemaker.inputs.TrainingInput(s3_data='s3://YOUR-BUCKET/YOUR-FILE.csv', content_type=content_type) # EXAMPLE: 's3://sagemaker-leader-ml/train_v1.csv'
 
-#test_data_url = 'sagemaker-leader-ml/ml-data-test.csv' # s3://sagemaker-leader-ml
-#validation_input = TrainingInput("s3://{}".format(test_data_url), content_type=content_type)
+
 val = sagemaker.inputs.TrainingInput(s3_data='s3://YOUR-BUCKET/YOUR-FILE.csv', content_type=content_type) # EXAMPLE: 's3://sagemaker-leader-ml/val_v1.csv'              
 
 
